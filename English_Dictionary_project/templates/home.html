@@ -1,0 +1,144 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rakshitha Dictionary</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(90deg, #121212 0%, #2c2c2c 50%, #121212 100%);
+      color: #e0e0e0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding-top: 100px;
+      max-width: 900px;
+    }
+    h1 {
+      color: #ffffff;
+      text-align: center;
+      font-family: serif;
+      margin-bottom: 40px;
+    }
+    h1 a {
+      color: #d1d1d1;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h1 a:hover {
+      color: #ffffff;
+    }
+    svg {
+      width: 40px;
+      height: 40px;
+      fill: #d1d1d1;
+    }
+    .card {
+      background-color: #1e1e1e;
+      border: none;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+    }
+    .card-header {
+      background: linear-gradient(90deg, #2f2f2f 0%, #444 50%, #2f2f2f 100%);
+      border-bottom: 1px solid #444;
+    }
+    .nav-link {
+      color: #d1d1d1;
+    }
+    .nav-link.active {
+      background-color: #343434;
+      border-color: #666;
+      color: #ffffff;
+    }
+    .nav-link:hover {
+      color: #ffffff;
+    }
+    .nav-link.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    input.form-control {
+      background-color: #2a2a2a;
+      color: #ffffff;
+      border: 1px solid #444;
+    }
+    input.form-control::placeholder {
+      color: #aaaaaa;
+    }
+    .btn {
+      background: #3c3c3c;
+      color: #ffffff;
+      border: none;
+      text-transform: uppercase;
+    }
+    .btn:hover {
+      background: #555;
+      color: #ffffff;
+    }
+
+    @media (max-width: 576px) {
+      body {
+        padding-top: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>
+    <a href="{% url 'home' %}">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Home">
+        <path d="M12 0L10.59 1.41 17.17 8H0v2h17.17l-6.58 6.59L12 18l9-9z"/>
+      </svg>
+      English Dictionary
+    </a>
+  </h1>
+
+  <div class="container">
+    <div class="card text-center">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" aria-current="page" href="{% url 'home' %}">Dictionary</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'history' %}active{% endif %}" href="{% url 'history' %}">History</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout ({{ user.username }})</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signin' %}">Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="card-body">
+        <form action="{% url 'word' %}" method="get">
+          <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Enter a word to search"
+            required
+            autofocus
+          />
+          <br />
+          <button class="btn w-100" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
