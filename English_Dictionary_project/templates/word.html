@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Rakshitha Dictionary</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+      body {
+        background: linear-gradient(90deg, #121212 0%, #2c2c2c 50%, #121212 100%);
+        color: #e0e0e0;
+        max-width: 900px;
+        min-height: 100vh;
+        margin: 0 auto;
+        padding-top: 100px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      h1, h2 {
+        color: #ffffff;
+        text-align: center;
+        font-family: serif;
+      }
+      .card {
+        background-color: #1e1e1e;
+        border: none;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+        margin-top: 30px;
+        padding: 30px;
+      }
+      .card-header {
+        background: linear-gradient(90deg, #2f2f2f 0%, #444 50%, #2f2f2f 100%);
+        border-bottom: 1px solid #444;
+      }
+      .btn {
+        background: #3c3c3c;
+        color: #ffffff;
+        border: none;
+      }
+      .btn:hover {
+        background: #555;
+      }
+      input.form-control {
+        background-color: #2a2a2a;
+        color: #ffffff;
+        border: 1px solid #444;
+      }
+      input.form-control::placeholder {
+        color: #aaaaaa;
+      }
+      ul {
+        list-style-type: none;
+        padding-left: 0;
+        text-align: left;
+        max-width: 600px;
+        margin: 0 auto 20px auto;
+      }
+      ul li {
+        padding: 5px 0;
+        border-bottom: 1px solid #333;
+      }
+      .btn-back {
+        display: block;
+        width: 250px;
+        margin: 30px auto 0 auto;
+        padding: 10px;
+        text-align: center;
+        background: #3c3c3c;
+        border-radius: 5px;
+        color: #fff;
+        text-decoration: none;
+      }
+      .btn-back:hover {
+        background: #555;
+      }
+      .pronunciation {
+        font-style: italic;
+        font-size: 1.2rem;
+        color: #bbb;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .speaker-btn {
+        margin-left: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        color: #ccc;
+      }
+      .speaker-btn:hover {
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center;">📚 English Dictionary</h1>
+
+    <div class="container">
+      <div class="card text-center">
+        <div class="card-body">
+          <form action="/word">
+            <input type="text" name="search" class="form-control" placeholder="Enter a word to search" />
+            <br />
+            <button class="btn w-100" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Search Results</h2>
+
+        <h2>
+          Word: {{ search }}
+          <span class="speaker-btn" onclick="speakWord('{{ search }}')" title="Speak the word">🔊</span>
+        </h2>
+
+        <div class="pronunciation">
+          <strong>Pronunciation:</strong> {{ pronunciation }}
+        </div>
+
+        <h2>Meaning:</h2>
+        <p>{{ meaning }}</p>
+
+        <h2>Synonyms:</h2>
+        <ul>
+          {% if synonyms %}
+            {% for s in synonyms %}
+              <li>{{ s }}</li>
+            {% endfor %}
+          {% else %}
+            <li>No synonyms found.</li>
+          {% endif %}
+        </ul>
+
+        <h2>Antonyms:</h2>
+        <ul>
+          {% if antonyms %}
+            {% for a in antonyms %}
+              <li>{{ a }}</li>
+            {% endfor %}
+          {% else %}
+            <li>No antonyms found.</li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <a href="/" class="btn-back">Search Another Word</a>
+    </div>
+
+    <!-- JS for speech -->
+    <script>
+      function speakWord(word) {
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'en-US';
+        speechSynthesis.speak(utterance);
+      }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
